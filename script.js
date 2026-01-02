@@ -239,10 +239,13 @@ function updateStickyCurrentClass() {
 }
 
 if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/timetable/service-worker.js");
-    });
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/timetable/service-worker.js")
+      .then(() => console.log("SW registered"))
+      .catch(err => console.error("SW failed", err));
+  });
 }
+
 
 firebase.initializeApp(firebaseConfig);
 
@@ -260,4 +263,5 @@ async function enableNotifications() {
   // 🔥 SAVE THIS TOKEN (important)
 }
 enableNotifications();
+
 
