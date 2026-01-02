@@ -240,7 +240,7 @@ function updateStickyCurrentClass() {
 
 if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/service-worker.js");
+        navigator.serviceWorker.register("/timetable/service-worker.js");
     });
 }
 
@@ -260,3 +260,4 @@ async function enableNotifications() {
   // 🔥 SAVE THIS TOKEN (important)
 }
 enableNotifications();
+
