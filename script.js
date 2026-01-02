@@ -147,7 +147,6 @@ function renderTable() {
     });
     updateClassStates();
     updateStickyCurrentClass();
-    enableNotifications();
 
 }
 
@@ -238,4 +237,3 @@ function updateStickyCurrentClass() {
         bar.classList.add("hidden");
     }
 }
-
