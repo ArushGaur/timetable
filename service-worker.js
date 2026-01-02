@@ -1,6 +1,3 @@
-importScripts("https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js");
-importScripts("https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js");
-
 const CACHE_NAME = "timetable-cache-v1";
 
 const FILES_TO_CACHE = [
@@ -38,5 +35,6 @@ self.addEventListener("message", event => {
     });
   }
 });
+
 
 
