@@ -147,6 +147,7 @@ function renderTable() {
     });
     updateClassStates();
     updateStickyCurrentClass();
+    enableNotifications();
 
 }
 
@@ -262,6 +263,6 @@ async function enableNotifications() {
   console.log("FCM Token:", token);
   // 🔥 SAVE THIS TOKEN (important)
 }
-enableNotifications();
+
 
 
