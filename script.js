@@ -248,21 +248,4 @@ if ("serviceWorker" in navigator) {
 }
 
 
-firebase.initializeApp(firebaseConfig);
-
-const messaging = firebase.messaging();
-
-async function enableNotifications() {
-  const permission = await Notification.requestPermission();
-  if (permission !== "granted") return;
-
-  const token = await messaging.getToken({
-    vapidKey: "BFwdISVN_aToxSkv3WZyKFW4gT78VdawEJNqstcu1y4UhchPTwsJqjVO7X4jOFMOsvZd_905bsMzcoQNXPjQrrY"
-  });
-
-  console.log("FCM Token:", token);
-  // 🔥 SAVE THIS TOKEN (important)
-}
-
-
 
