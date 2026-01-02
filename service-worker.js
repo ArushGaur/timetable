@@ -9,7 +9,7 @@ const FILES_TO_CACHE = [
   "/timetable/style.css",
   "/timetable/script.js",
   "/timetable/manifest.json",
-  "/timetable/icon-192.png",
+  "/timetable/icon-192.jpg",
   "/timetable/icon-512.png"
 ];
 self.addEventListener("install", event => {
@@ -38,4 +38,5 @@ self.addEventListener("message", event => {
     });
   }
 });
+
 
