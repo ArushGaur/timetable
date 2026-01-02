@@ -1,6 +1,17 @@
 importScripts("https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js");
 importScripts("https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js");
 
+const CACHE_NAME = "timetable-cache-v1";
+
+const FILES_TO_CACHE = [
+  "/timetable/",
+  "/timetable/index.html",
+  "/timetable/style.css",
+  "/timetable/script.js",
+  "/timetable/manifest.json",
+  "/timetable/icon-192.png",
+  "/timetable/icon-512.png"
+];
 firebase.initializeApp({
   apiKey: "AIzaSyACRKlP9nM0H8VL6XujsbJTOKBN5Z23Ryk",
   authDomain: "timetable-46988.firebaseapp.com",
@@ -19,3 +30,4 @@ messaging.onBackgroundMessage(payload => {
     icon: "/icon-192.png"
   });
 });
+
