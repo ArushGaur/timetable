@@ -12,22 +12,30 @@ const FILES_TO_CACHE = [
   "/timetable/icon-192.png",
   "/timetable/icon-512.png"
 ];
-firebase.initializeApp({
-  apiKey: "AIzaSyACRKlP9nM0H8VL6XujsbJTOKBN5Z23Ryk",
-  authDomain: "timetable-46988.firebaseapp.com",
-  projectId: "timetable-46988",
-  storageBucket: "timetable-46988.firebasestorage.app",
-  messagingSenderId: "611929599966",
-  appId: "1:611929599966:web:8b681ad3c973a6f77fb74f",
-  measurementId: "G-KTZ2WX1DGN"
+self.addEventListener("install", event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => cache.addAll(FILES_TO_CACHE))
+  );
 });
 
-const messaging = firebase.messaging();
+self.addEventListener("fetch", event => {
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
+    })
+  );
+});
 
-messaging.onBackgroundMessage(payload => {
-  self.registration.showNotification(payload.notification.title, {
-    body: payload.notification.body,
-    icon: "/icon-192.png"
-  });
+self.addEventListener("message", event => {
+  if (event.data && event.data.type === "SHOW_NOTIFICATION") {
+    self.registration.showNotification(event.data.title, {
+      body: event.data.body,
+      icon: "/icon-192.png",
+      badge: "/icon-192.png",
+      vibrate: [200, 100, 200],
+      tag: event.data.tag,
+      requireInteraction: true
+    });
+  }
 });
 
