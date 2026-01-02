@@ -14,11 +14,12 @@
       "type": "image/jpg"
     },
     {
-      "src": "/timetable/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "src": "/timetable/icon-512.jpg",
+      "sizes": "515x958",
+      "type": "image/jpg"
     }
   ]
 }
+
 
 
