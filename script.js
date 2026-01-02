@@ -246,12 +246,17 @@ if ("serviceWorker" in navigator) {
   });
 }
 
-
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp({
+  apiKey: "AIzaSyACRKlP9nM0H8VL6XujsbJTOKBN5Z23Ryk",
+  authDomain: "timetable-46988.firebaseapp.com",
+  projectId: "timetable-46988",
+  messagingSenderId: "611929599966",
+  appId: "1:611929599966:web:8b681ad3c973a6f77fb74f"
+});
 
 const messaging = firebase.messaging();
 
-async function enableNotifications() {
+async function getToken() {
   const permission = await Notification.requestPermission();
   if (permission !== "granted") return;
 
@@ -259,9 +264,7 @@ async function enableNotifications() {
     vapidKey: "BFwdISVN_aToxSkv3WZyKFW4gT78VdawEJNqstcu1y4UhchPTwsJqjVO7X4jOFMOsvZd_905bsMzcoQNXPjQrrY"
   });
 
-  console.log("FCM Token:", token);
-  // 🔥 SAVE THIS TOKEN (important)
+  console.log("FCM TOKEN:", token);
 }
-enableNotifications();
 
-
+getToken();
