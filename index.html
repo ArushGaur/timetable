@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e88e5">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Timetable</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-messaging-compat.js"></script>
+
+</head>
+
+<body>
+    <div id="currentClassBar" class="current-class-bar hidden">
+        <span class="now">NOW</span>
+        <span id="currentClassText"></span>
+    </div>
+
+    <div class="container">
+        <h1>
+            <pre
+                style="font-size: 30px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">  Timetable 📅</pre>
+        </h1>
+        <p>My Weekly schedule</p>
+
+        <div class="card">
+            <div class="card-header">
+                <h1>Arush Gaur</h1>
+            </div>
+
+            <div class="tabs">
+                <button class="active" onclick="changeDay('Monday', this)">Monday</button>
+                <button onclick="changeDay('Tuesday', this)">Tuesday</button>
+                <button onclick="changeDay('Wednesday', this)">Wednesday</button>
+                <button onclick="changeDay('Thursday', this)">Thursday</button>
+                <button onclick="changeDay('Friday', this)">Friday</button>
+                <button onclick="changeDay('Saturday', this)">Saturday</button>
+                <button onclick="changeDay('Sunday', this)">Sunday</button>
+            </div>
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>TIME</th>
+                            <th>WORK</th>
+                            <th>LOCATION</th>
+                        </tr>
+                    </thead>
+                    <tbody id="timetableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
