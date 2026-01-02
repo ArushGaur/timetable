@@ -1,5 +1,5 @@
 {
-  "name": "Arush Timetable",
+  "name": "Arush's Timetable",
   "short_name": "Timetable",
   "start_url": "/timetable/",
   "scope": "/timetable/",
@@ -20,4 +20,5 @@
     }
   ]
 }
+
 
