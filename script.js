@@ -123,7 +123,7 @@ const defaultTimetable = {
         { time: "21:30 - 22:30", Work: "Class Revision", notify: false, location: "CVR-210" }
     ],
     Saturday: [
-        { time: "06:00 - 06:30", Work: "", notify: false, location: "" },
+        { time: "15:45 - 16:35", Work: "Italian", notify: false, location: "CVR-210" }
     ],
     Sunday: [
         { time: "06:00 - 06:30", Work: "Ready", notify: false, location: "CVR-210" },
@@ -371,6 +371,7 @@ window.addEventListener("load", () => {
     // 4. Keep the auto-vanish as a fallback (after 3 seconds)
     setTimeout(dismissOverlay, 1750); 
 });
+
 
 
 
