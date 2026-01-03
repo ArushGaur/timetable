@@ -1,41 +1,43 @@
-const CACHE_NAME = "timetable-runtime-cache";
+const CACHE_NAME = "timetable-static-v1";
 
-/* Install */
-self.addEventListener("install", () => {
+const STATIC_ASSETS = [
+  "/timetable/",
+  "/timetable/index.html",
+  "/timetable/style.css",
+  "/timetable/script.js",
+  "/timetable/manifest.json",
+  "/timetable/welcome.png",
+  "/timetable/icon-192.png",
+  "/timetable/icon-512.png"
+];
+
+/* Install – cache static files */
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS))
+  );
   self.skipWaiting();
 });
 
-/* Activate */
+/* Activate – clean old caches */
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(keys.map((key) => caches.delete(key)))
+      Promise.all(
+        keys.map((key) => key !== CACHE_NAME && caches.delete(key))
+      )
     )
   );
   self.clients.claim();
 });
 
-/* Fetch – Network First, Cache Images */
+/* Fetch – cache first for static, network fallback */
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
-  const request = event.request;
-
   event.respondWith(
-    fetch(request)
-      .then((networkResponse) => {
-        // Cache images + files
-        if (
-          request.destination === "image" ||
-          request.url.includes("/timetable/")
-        ) {
-          const clone = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(request, clone);
-          });
-        }
-        return networkResponse;
-      })
-      .catch(() => caches.match(request))
+    caches.match(event.request).then((cached) => {
+      return cached || fetch(event.request);
+    })
   );
 });
