@@ -192,10 +192,6 @@ tbody tr {
     opacity: 0.45;
 }
 
-.class-row.past td {
-    text-decoration: line-through;
-}
-
 /* ==========================
    STICKY CURRENT CLASS BAR
    ========================== */
@@ -233,3 +229,4 @@ tbody tr {
         font-size: 0.85rem;
     }
 }
+
