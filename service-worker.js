@@ -1,38 +1,36 @@
-const CACHE_NAME = "timetable-cache-v3";
+const CACHE_NAME = "timetable-runtime-cache";
 
-const FILES_TO_CACHE = [
-  "/timetable/",
-  "/timetable/index.html",
-  "/timetable/style.css",
-  "/timetable/script.js",
-  "/timetable/manifest.json",
-  "/timetable/icon-192.png",
-  "/timetable/icon-512.png"
-];
-
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(FILES_TO_CACHE))
-  );
+/* Install */
+self.addEventListener("install", () => {
   self.skipWaiting();
 });
 
+/* Activate */
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
-      Promise.all(
-        keys.map((key) => key !== CACHE_NAME && caches.delete(key))
-      )
+      Promise.all(keys.map((key) => caches.delete(key)))
     )
   );
   self.clients.claim();
 });
 
+/* Fetch – Network First, Cache Fallback */
 self.addEventListener("fetch", (event) => {
+  // Only handle GET requests
+  if (event.request.method !== "GET") return;
+
   event.respondWith(
-    caches.match(event.request).then((res) => res || fetch(event.request))
+    fetch(event.request)
+      .then((networkResponse) => {
+        const responseClone = networkResponse.clone();
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, responseClone);
+        });
+        return networkResponse;
+      })
+      .catch(() => {
+        return caches.match(event.request);
+      })
   );
 });
-
-
-
