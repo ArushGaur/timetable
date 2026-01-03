@@ -344,5 +344,6 @@ window.addEventListener("load", () => {
     setTimeout(typeQuote, 600);
 
     // 4. Keep the auto-vanish as a fallback (after 3 seconds)
-    setTimeout(dismissOverlay, 3000); 
+    setTimeout(dismissOverlay, 1750); 
 });
+
