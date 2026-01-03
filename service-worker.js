@@ -15,22 +15,27 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
-/* Fetch – Network First, Cache Fallback */
+/* Fetch – Network First, Cache Images */
 self.addEventListener("fetch", (event) => {
-  // Only handle GET requests
   if (event.request.method !== "GET") return;
 
+  const request = event.request;
+
   event.respondWith(
-    fetch(event.request)
+    fetch(request)
       .then((networkResponse) => {
-        const responseClone = networkResponse.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseClone);
-        });
+        // Cache images + files
+        if (
+          request.destination === "image" ||
+          request.url.includes("/timetable/")
+        ) {
+          const clone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(request, clone);
+          });
+        }
         return networkResponse;
       })
-      .catch(() => {
-        return caches.match(event.request);
-      })
+      .catch(() => caches.match(request))
   );
 });
