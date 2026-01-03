@@ -145,7 +145,7 @@ function toggleEditMode() {
     isEditMode = !isEditMode;
     const btn = document.getElementById("editBtn");
     const nameHeader = document.getElementById("userName");
-    
+
     if (isEditMode) {
         btn.innerText = "✅";
         btn.style.background = "#2e7d32";
@@ -154,7 +154,7 @@ function toggleEditMode() {
     } else {
         btn.innerText = "✏️";
         btn.style.background = "#1e88e5";
-        
+
         // Save the new name
         const nameInput = document.getElementById("nameInput");
         if (nameInput) {
@@ -162,7 +162,7 @@ function toggleEditMode() {
             localStorage.setItem("userName", userName);
             nameHeader.innerText = userName;
         }
-        
+
         // Save the timetable
         localStorage.setItem("userTimetable", JSON.stringify(timetable));
     }
@@ -191,11 +191,40 @@ function renderTable() {
             // Editable Row with Delete Button
             body.innerHTML += `
                 <tr class="class-row">
-                    <td><input type="text" value="${cls.time}" oninput="updateValue('${currentDay}', ${index}, 'time', this.value)"></td>
-                    <td><input type="text" value="${cls.Work}" oninput="updateValue('${currentDay}', ${index}, 'Work', this.value)"></td>
-                    <td><input type="text" value="${cls.location}" oninput="updateValue('${currentDay}', ${index}, 'location', this.value)"></td>
+                    <!-- TIME (clickable, opens modal) -->
+                    <td
+                        onclick="openTimePicker(${index}, '${cls.time}')"
+                        style="cursor:pointer; font-weight:600; color:#1e88e5;"
+                    >
+                        ${cls.time}
+                    </td>
+
+                    <!-- WORK -->
+<td
+  class="editable-cell"
+  onclick="openTextEditor('${currentDay}', ${index}, 'Work', '${cls.Work}')"
+>
+  ${cls.Work}
+</td>
+
+<!-- LOCATION -->
+<td
+  class="editable-cell editable-location"
+  onclick="openTextEditor('${currentDay}', ${index}, 'location', '${cls.location}')"
+>
+  ${cls.location}
+</td>
+
+
+
+                    <!-- DELETE -->
                     <td>
-                        <button onclick="deleteRow(${index})" style="background:none; border:none; color:red; cursor:pointer; font-size:1.2rem;">🗑️</button>
+                        <button
+                            onclick="deleteRow(${index})"
+                            style="background:none; border:none; color:red; cursor:pointer; font-size:1.2rem;"
+                        >
+                            🗑️
+                        </button>
                     </td>
                 </tr>
             `;
@@ -333,7 +362,7 @@ window.addEventListener("load", () => {
         // Optional: Remove from DOM after animation so it doesn't interfere
         setTimeout(() => {
             overlay.style.display = "none";
-        }, 500); 
+        }, 500);
     };
 
     // 2. Add Click/Tap listener to vanish on click
@@ -348,15 +377,118 @@ window.addEventListener("load", () => {
         }
     }
 
-    typedEl.textContent = ""; 
+    typedEl.textContent = "";
     setTimeout(typeQuote, 600);
 
     // 4. Keep the auto-vanish as a fallback (after 3 seconds)
-    setTimeout(dismissOverlay, 1750); 
+    setTimeout(dismissOverlay, 1750);
 });
 
+let activeEditRowIndex = null;
+
+function openTimePicker(index, time) {
+    if (!isEditMode) return;
+
+    activeEditRowIndex = index;
+
+    const [start, end] = time.split(" - ");
+    document.getElementById("startTime").value = start;
+    document.getElementById("endTime").value = end;
+
+    document.getElementById("timePickerOverlay").classList.remove("hidden");
+}
+
+function closeTimePicker() {
+    document.getElementById("timePickerOverlay").classList.add("hidden");
+}
+
+function applyTime() {
+    const start = document.getElementById("startTime").value;
+    const end = document.getElementById("endTime").value;
+
+    if (!start || !end) {
+        alert("Please select both times");
+        return;
+    }
+
+    if (end <= start) {
+        alert("End time must be after start time");
+        return;
+    }
+
+    timetable[currentDay][activeEditRowIndex].time = `${start} - ${end}`;
+    renderTable();
+    closeTimePicker();
+}
+
+function openNativePicker(wrapper) {
+    const input = wrapper.querySelector("input[type='time']");
+    if (!input) return;
+
+    // Modern browsers (Chrome, Edge, Android)
+    if (input.showPicker) {
+        input.showPicker();
+    } else {
+        input.focus(); // fallback
+    }
+}
+
+let activeTextEdit = {
+    type: null,
+    day: null,
+    index: null,
+    field: null
+};
+
+function openTextEditor(day, index, field, currentValue, type = "timetable") {
+    if (!isEditMode && type !== "name") return;
+
+    activeTextEdit = { type, day, index, field };
+
+    const title =
+        type === "name"
+            ? "Edit Name"
+            : field === "Work"
+                ? "Edit Work"
+                : "Edit Location";
+
+    document.getElementById("textEditTitle").innerText = title;
+
+    const input = document.getElementById("textEditInput");
+    input.value = currentValue;
+    input.focus();
+
+    document.getElementById("textEditOverlay").classList.remove("hidden");
+}
 
 
+function applyTextEdit() {
+    const value = document.getElementById("textEditInput").value.trim();
+    if (!value) return;
 
+    if (activeTextEdit.type === "name") {
+        userName = value;
+        localStorage.setItem("userName", userName);
+        document.getElementById("userName").innerText = userName;
+    } else {
+        const { day, index, field } = activeTextEdit;
+        timetable[day][index][field] = value;
+        renderTable();
+    }
 
+    closeTextEditor();
+}
+
+function closeTextEditor() {
+    const overlay = document.getElementById("textEditOverlay");
+    overlay.classList.add("hidden");
+
+    // 🔥 reset state (VERY IMPORTANT)
+    activeTextEdit = {
+        type: null,
+        day: null,
+        index: null,
+        field: null
+    };
+}
 
