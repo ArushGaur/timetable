@@ -1,4 +1,4 @@
-const CACHE_NAME = "timetable-v3";
+const CACHE_NAME = "timetable-v" + Date.now(); 
 const STATIC_ASSETS = [
   "/timetable/",
   "/timetable/index.html",
@@ -10,34 +10,38 @@ const STATIC_ASSETS = [
   "/timetable/icon-512.png"
 ];
 
-// Install – cache static files
 self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS))
-  );
-  self.skipWaiting(); 
+  self.skipWaiting();
 });
 
-// Activate – clean old caches
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(
-        keys.map((key) => {
-          if (key !== CACHE_NAME) return caches.delete(key);
-        })
-      )
-    )
+    caches.keys().then((keys) => {
+      return Promise.all(
+        keys.map((key) => caches.delete(key)) // Clear ALL old caches on activation
+      );
+    })
   );
   self.clients.claim();
 });
 
-// This ensures it works offline, but updates the cache for NEXT time
+// NETWORK FIRST STRATEGY
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
+
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      return cachedResponse || fetch(event.request);
-    })
+    fetch(event.request)
+      .then((response) => {
+        // If network is successful, update cache and return response
+        return caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, response.clone());
+          return response;
+        });
+      })
+      .catch(() => {
+        // If network fails (offline), try the cache
+        return caches.match(event.request);
+      })
   );
 });
+
