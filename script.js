@@ -1,41 +1,11 @@
-// Service Worker Registration and Update Logic
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./service-worker.js').then(registration => {
-            // Check for updates on every page load
-            registration.update();
-
-            registration.onupdatefound = () => {
-                const installingWorker = registration.installing;
-                installingWorker.onstatechange = () => {
-                    if (installingWorker.state === 'installed') {
-                        if (navigator.serviceWorker.controller) {
-                            // New update found! Show a message to the user.
-                            showUpdateToast();
-                        }
-                    }
-                };
-            };
+        navigator.serviceWorker.register('./service-worker.js').then(reg => {
+            // Check for updates every time the page is opened
+            reg.update();
         });
     });
 }
-
-function showUpdateToast() {
-    const updateDiv = document.createElement("div");
-    updateDiv.innerHTML = `
-        <div id="update-toast" style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
-             background: #333; color: #fff; padding: 15px 25px; border-radius: 50px; 
-             z-index: 9999; display: flex; gap: 15px; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
-            <span>New version available!</span>
-            <button onclick="window.location.reload()" style="background: #1e88e5; border: none; 
-                    color: white; padding: 5px 15px; border-radius: 20px; cursor: pointer; font-weight: bold;">
-                RELOAD
-            </button>
-        </div>
-    `;
-    document.body.appendChild(updateDiv);
-}
-
 // 1. Keep your original data as the default
 const defaultTimetable = {
     Monday: [
@@ -371,6 +341,7 @@ window.addEventListener("load", () => {
     // 4. Keep the auto-vanish as a fallback (after 3 seconds)
     setTimeout(dismissOverlay, 1750); 
 });
+
 
 
 
