@@ -110,9 +110,8 @@ tbody tr {
     border-top: 1px solid #e6eaf2;
 }
 
-
+/* MOBILE ADJUSTMENTS */
 @media (max-width: 380px) {
-
     h1 {
         font-size: 1.6rem;
     }
@@ -121,27 +120,14 @@ tbody tr {
         padding: 1.5rem 0;
     }
 
-    .card-header {
-        padding: 1.1rem;
-    }
-
-    .card-header h2 {
-        font-size: 1.25rem;
-    }
-
     .tabs {
         overflow-x: auto;
         flex-wrap: nowrap;
     }
 
     .tabs button {
-        flex: 0 0 auto;
         font-size: 0.85rem;
         padding: 0.45rem 0.9rem;
-    }
-
-    .tabs::-webkit-scrollbar {
-        display: none;
     }
 
     table {
@@ -153,6 +139,7 @@ tbody tr {
         padding: 0.65rem;
     }
 
+    .tabs::-webkit-scrollbar,
     .table-scroll::-webkit-scrollbar {
         display: none;
     }
@@ -164,37 +151,29 @@ tbody tr {
         flex-wrap: nowrap;
     }
 
-    .tabs button {
-        flex: 0 0 auto;
-    }
-
     .tabs::-webkit-scrollbar {
         display: none;
     }
 }
 
-/* CURRENT CLASS HIGHLIGHT */
-
-.class-row.current {
-  background-color: #d1ffd6;
-  border-left: 5px solid green;
-}
-
-/* NEXT class */
-.class-row.next {
-  background-color: #e7f0ff;
-  border-left: 5px solid #007bff;
-  font-weight: bold;
-}
-/* FADED PAST CLASS */
+/* CLASS STATES */
 
 .class-row.past {
     opacity: 0.45;
 }
 
-/* ==========================
-   STICKY CURRENT CLASS BAR
-   ========================== */
+.class-row.current {
+    background-color: #d1ffd6;
+    border-left: 5px solid green;
+}
+
+.class-row.next {
+    background-color: #e7f0ff;
+    border-left: 5px solid #007bff;
+    font-weight: bold;
+}
+
+/* STICKY CURRENT CLASS BAR */
 
 .current-class-bar {
     position: sticky;
@@ -223,10 +202,78 @@ tbody tr {
     display: none;
 }
 
-/* Slightly smaller on very small phones */
-@media (max-width: 380px) {
-    .current-class-bar {
-        font-size: 0.85rem;
-    }
+/* ========================= */
+/* QUOTE INTRO OVERLAY */
+/* ========================= */
+
+#quoteOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(245, 247, 251, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
 }
 
+/* Quote card (NO ZOOM) */
+.quote-card {
+    background: white;
+    width: 85%;
+    max-width: 360px;
+    border-radius: 20px;
+    padding: 24px 20px 28px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+/* Image on top */
+.quote-card img {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    margin-bottom: 18px;
+}
+
+/* Quote text – centered, left → right reveal */
+.quote-card p {
+  position: relative;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e293b;
+  line-height: 1.4;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Mask overlay */
+.quote-card p::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: white; /* same as card background */
+  transform: translateX(0);
+  animation: revealMask 1.4s ease-out forwards;
+  animation-delay: 0.3s;
+}
+
+/* Left → right reveal */
+@keyframes revealMask {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+
+
+/* Fade out overlay */
+#quoteOverlay.fade-out {
+    animation: fadeOut 0.8s ease forwards;
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        pointer-events: none;
+    }
+}
