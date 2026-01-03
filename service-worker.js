@@ -1,6 +1,6 @@
-const CACHE_NAME = "timetable-static-v1";
+const CACHE_NAME = "timetable-cache-auto-v1";
 
-const STATIC_ASSETS = [
+const FILES_TO_CACHE = [
   "/timetable/",
   "/timetable/index.html",
   "/timetable/style.css",
@@ -11,27 +11,31 @@ const STATIC_ASSETS = [
   "/timetable/icon-512.png"
 ];
 
-/* Install – cache static files */
+/* INSTALL: cache fresh files */
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS))
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(FILES_TO_CACHE))
   );
   self.skipWaiting();
 });
 
-/* Activate – clean old caches */
+/* ACTIVATE: delete ALL old caches automatically */
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
       Promise.all(
-        keys.map((key) => key !== CACHE_NAME && caches.delete(key))
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
       )
     )
   );
   self.clients.claim();
 });
 
-/* Fetch – cache first for static, network fallback */
+/* FETCH: cache-first (stable for GitHub Pages) */
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
