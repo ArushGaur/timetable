@@ -367,3 +367,183 @@ input:focus {
     border-radius: 999px;
     opacity: 0.3;
 }
+
+/* ===== Overlay ===== */
+
+/* Hide native time picker icon (Chrome, Edge) */
+input[type="time"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  position: absolute;
+  right: 0;
+}
+
+.time-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(0.4rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+/* ===== Card ===== */
+.time-card {
+  background: #fff;
+  width: min(92%, 24rem);
+  border-radius: 1.4rem;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  box-shadow: 0 1.5rem 3rem rgba(0,0,0,0.3);
+}
+
+/* ===== Title ===== */
+.time-card h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* ===== Time Row ===== */
+.time-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  width: 100%;
+}
+
+/* ===== Time Box ===== */
+.time-box {
+  flex: 1;
+  min-width: 0;              /* CRITICAL */
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.time-box label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #64748b;
+  letter-spacing: 0.04em;
+}
+
+/* ===== Input Container ===== */
+.time-input {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #f1f5f9;
+  border-radius: 0.9rem;
+  padding: 0.6rem 0.8rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ===== Time Input ===== */
+.time-input input {
+  flex: 1;
+  min-width: 0;              /* CRITICAL */
+  border: none;
+  background: transparent;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1e88e5;
+}
+
+.time-input input:focus {
+  outline: none;
+}
+
+/* ===== Icons ===== */
+.time-input span {
+  font-size: 1rem;
+  opacity: 0.7;
+}
+
+/* ===== Arrow ===== */
+.arrow {
+  font-size: 1.2rem;
+  color: #94a3b8;
+  flex-shrink: 0;
+  margin-top: 1.16rem;
+}
+
+/* ===== Buttons ===== */
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 0.6rem;
+}
+
+.btn-cancel {
+  padding: 0.55rem 1rem;
+  border-radius: 0.8rem;
+  border: none;
+  background: #e2e8f0;
+  font-size: 0.9rem;
+}
+
+.btn-confirm {
+  padding: 0.55rem 1.2rem;
+  border-radius: 0.8rem;
+  border: none;
+  background: #1e88e5;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/* ===== Hidden ===== */
+.hidden {
+  display: none !important;
+}
+
+.text-input-wrapper {
+  width: 100%;
+  background: #f1f5f9;
+  border-radius: 0.9rem;
+  padding: 0.7rem 0.9rem;
+}
+
+.text-input-wrapper input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.text-input-wrapper input:focus {
+  outline: none;
+}
+
+/* Editable fields (Edit Mode only) */
+.editable-cell {
+  color: #2e7d32;          /* blue, readable */
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Optional hover hint */
+.editable-cell:hover {
+  background-color: rgba(30, 136, 229, 0.08);
+  border-radius: 0.4rem;
+}
+
+/* Location slightly different shade (optional but nice) */
+.editable-location {
+  color: #2e7d32;          /* green */
+}
+
+.editable-cell::after {
+  content: " ✎";
+  font-size: 0.75em;
+  opacity: 0.5;
+}
