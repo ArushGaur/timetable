@@ -1,4 +1,5 @@
-const timetable = {
+// 1. Keep your original data as the default
+const defaultTimetable = {
     Monday: [
         { time: "06:00 - 06:30", Work: "Ready", notify: false, location: "CVR-210" },
         { time: "06:30 - 07:30", Work: "Gym", notify: false, location: "Gymkhana" },
@@ -107,18 +108,62 @@ const timetable = {
         { time: "09:45 - 12:45", Work: "WEB Dev", notify: true, location: "CVR-210" },
         { time: "12:45 - 13:35", Work: "Lunch", notify: true, location: "Mess" },
         { time: "13:35 - 15:45", Work: "NCERT Reading", notify: true, location: "CVR-210" },
-        { time: "15:45 - 16:35", Work: "Italian", notify: false, location: "CVR-210" },
-        // { time: "14:00 - 17:00", Work: "CE1201",           notify: true,  location: "CLH-LT103" },
-        // { time: "17:20 - 18:00", Work: "Italian",          notify: false, location: "CVR-210" },
-        // { time: "18:00 - 19:30", Work: "NCERT Reading",    notify: false, location: "CVR-210" },
-        // { time: "19:30 - 21:00", Work: "Class Revision",   notify: false, location: "CVR-210" },
-        // { time: "21:00 - 21:30", Work: "Dinner",           notify: false, location: "Mess" },
-        // { time: "22:00 - 23:30", Work: "NCERT Reading",    notify: false, location: "CVR-210" }
+        { time: "15:45 - 16:35", Work: "Italian", notify: false, location: "CVR-210" }
     ]
 };
+
+// 2. State variables
+let currentDay = "Monday";
+let isEditMode = false;
+let timetable = JSON.parse(localStorage.getItem("userTimetable")) || defaultTimetable;
+let userName = localStorage.getItem("userName") || "Arush Gaur";
+
 window.onload = () => {
+    document.getElementById("userName").innerText = userName;
     setCurrentDay();
 };
+
+function setupEditButton() {
+    const container = document.querySelector(".container");
+    const editBtn = document.createElement("button");
+    editBtn.id = "editBtn";
+    editBtn.innerText = "✏️";
+    editBtn.style = "position: fixed; top: 10px; right: 10px; z-index: 1001; padding: 8px 15px; border-radius: 20px; border: none; background: #1e88e5; color: white; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); cursor: pointer;";
+    editBtn.onclick = toggleEditMode;
+    document.body.appendChild(editBtn);
+}
+
+function toggleEditMode() {
+    isEditMode = !isEditMode;
+    const btn = document.getElementById("editBtn");
+    const nameHeader = document.getElementById("userName");
+    
+    if (isEditMode) {
+        btn.innerText = "✅";
+        btn.style.background = "#2e7d32";
+        // Turn the name into an input field
+        nameHeader.innerHTML = `<input type="text" id="nameInput" value="${userName}" style="color:black; font-size: 1.2rem; text-align: center; border-radius: 5px; border: none; padding: 5px;">`;
+    } else {
+        btn.innerText = "✏️";
+        btn.style.background = "#1e88e5";
+        
+        // Save the new name
+        const nameInput = document.getElementById("nameInput");
+        if (nameInput) {
+            userName = nameInput.value;
+            localStorage.setItem("userName", userName);
+            nameHeader.innerText = userName;
+        }
+        
+        // Save the timetable
+        localStorage.setItem("userTimetable", JSON.stringify(timetable));
+    }
+    renderTable();
+}
+
+function updateValue(day, index, field, value) {
+    timetable[day][index][field] = value;
+}
 
 function changeDay(day, btn) {
     currentDay = day;
@@ -131,38 +176,80 @@ function renderTable() {
     const body = document.getElementById("timetableBody");
     body.innerHTML = "";
 
-    timetable[currentDay].forEach(cls => {
+    timetable[currentDay].forEach((cls, index) => {
         const [start, end] = cls.time.split(" - ");
 
-        body.innerHTML += `
-            <tr class="class-row"
-                data-start="${start}"
-                data-end="${end}">
-                <td>${cls.time}</td>
-                <td>${cls.Work}</td>
-                <td>${cls.location}</td>
-            </tr>
-        `;
+        if (isEditMode) {
+            // Editable Row with Delete Button
+            body.innerHTML += `
+                <tr class="class-row">
+                    <td><input type="text" value="${cls.time}" oninput="updateValue('${currentDay}', ${index}, 'time', this.value)"></td>
+                    <td><input type="text" value="${cls.Work}" oninput="updateValue('${currentDay}', ${index}, 'Work', this.value)"></td>
+                    <td><input type="text" value="${cls.location}" oninput="updateValue('${currentDay}', ${index}, 'location', this.value)"></td>
+                    <td>
+                        <button onclick="deleteRow(${index})" style="background:none; border:none; color:red; cursor:pointer; font-size:1.2rem;">🗑️</button>
+                    </td>
+                </tr>
+            `;
+        } else {
+            // Normal View
+            body.innerHTML += `
+                <tr class="class-row" data-start="${start}" data-end="${end}">
+                    <td>${cls.time}</td>
+                    <td>${cls.Work}</td>
+                    <td>${cls.location}</td>
+                </tr>
+            `;
+        }
     });
 
-    updateClassStates();
-    updateStickyCurrentClass();
+    // Add "+" button row at the bottom if in edit mode
+    if (isEditMode) {
+        body.innerHTML += `
+            <tr>
+                <td colspan="4">
+                    <button onclick="addRow()" style="width:100%; padding:10px; background:#e8f0fe; border:2px dashed #1e88e5; color:#1e88e5; font-weight:bold; cursor:pointer; border-radius:8px;">
+                        + Add New Row
+                    </button>
+                </td>
+            </tr>
+        `;
+    }
+
+    if (!isEditMode) {
+        updateClassStates();
+        updateStickyCurrentClass();
+    }
 }
 
+// Function to add a blank row to the current day
+function addRow() {
+    const newEntry = { time: "00:00 - 00:00", Work: "New Task", notify: false, location: "Room" };
+    timetable[currentDay].push(newEntry);
+    renderTable(); // Refresh the table to show the new row
+}
 
+// Function to delete a specific row
+function deleteRow(index) {
+    if (confirm("Are you sure you want to delete this task?")) {
+        timetable[currentDay].splice(index, 1);
+        renderTable(); // Refresh the table
+    }
+}
 
+// Keep all your original logic below exactly as it was
 setInterval(() => {
-    updateClassStates();
-    updateStickyCurrentClass();
+    if (!isEditMode) {
+        updateClassStates();
+        updateStickyCurrentClass();
+    }
 }, 60000);
 
 function setCurrentDay() {
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const today = new Date().getDay();
     const todayName = days[today];
-
     const buttons = document.querySelectorAll(".tabs button");
-
     buttons.forEach(button => {
         if (button.innerText === todayName) {
             button.click();
@@ -171,94 +258,91 @@ function setCurrentDay() {
 }
 
 function timeToMinutes(time) {
-    const [hours, minutes] = time.split(":").map(Number);
+    if (!time) return 0;
+    const [hours, minutes] = time.trim().split(":").map(Number);
     return hours * 60 + minutes;
 }
 
 function updateClassStates() {
     const now = new Date();
     const currentMinutes = now.getHours() * 60 + now.getMinutes();
-
     let nextClassMarked = false;
 
     document.querySelectorAll(".class-row").forEach(row => {
         row.classList.remove("past", "current", "next");
-
         const start = timeToMinutes(row.dataset.start);
         const end = timeToMinutes(row.dataset.end);
 
         if (currentMinutes >= end) {
             row.classList.add("past");
-        }
-        else if (currentMinutes >= start && currentMinutes <= end) {
+        } else if (currentMinutes >= start && currentMinutes <= end) {
             row.classList.add("current");
-        }
-        else if (!nextClassMarked && currentMinutes < start) {
+        } else if (!nextClassMarked && currentMinutes < start) {
             row.classList.add("next");
             nextClassMarked = true;
         }
     });
 }
 
-
 function updateStickyCurrentClass() {
-            const bar = document.getElementById("currentClassBar");
-            const text = document.getElementById("currentClassText");
+    const bar = document.getElementById("currentClassBar");
+    const text = document.getElementById("currentClassText");
+    const now = new Date();
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
+    const rows = document.querySelectorAll("#timetableBody tr");
+    let found = false;
 
-            const now = new Date();
-            const currentMinutes = now.getHours() * 60 + now.getMinutes();
+    rows.forEach(row => {
+        const timeCell = row.querySelector("td");
+        if (!timeCell || isEditMode) return;
 
-            const rows = document.querySelectorAll("#timetableBody tr");
+        const [start, end] = timeCell.innerText.split(" - ");
+        const startMin = timeToMinutes(start);
+        const endMin = timeToMinutes(end);
 
-            let found = false;
-
-            rows.forEach(row => {
-                const timeCell = row.querySelector("td");
-                if (!timeCell) return;
-
-                const [start, end] = timeCell.innerText.split(" - ");
-                const startMin = timeToMinutes(start);
-                const endMin = timeToMinutes(end);
-
-                if (currentMinutes >= startMin && currentMinutes <= endMin) {
-                    const cells = row.querySelectorAll("td");
-                    const time = cells[0].innerText;
-                    const course = cells[1].innerText;
-                    const location = cells[2]?.innerText || "";
-
-                    text.innerText = `${time} • ${course} • ${location}`;
-                    bar.classList.remove("hidden");
-                    found = true;
-                }
-            });
-
-            if (!found) {
-                bar.classList.add("hidden");
-            }
+        if (currentMinutes >= startMin && currentMinutes <= endMin) {
+            const cells = row.querySelectorAll("td");
+            text.innerText = `${cells[0].innerText} • ${cells[1].innerText} • ${cells[2]?.innerText || ""}`;
+            bar.classList.remove("hidden");
+            found = true;
         }
+    });
+
+    if (!found) bar.classList.add("hidden");
+}
 
 window.addEventListener("load", () => {
-  const overlay = document.getElementById("quoteOverlay");
-  const typedEl = document.getElementById("typedQuote");
+    const overlay = document.getElementById("quoteOverlay");
+    const typedEl = document.getElementById("quoteText");
 
-  const quotes = [
-    "Designed to Focus"
-  ];
+    const quotes = ["Designed for Focus"];
+    const quote = quotes[0];
+    let index = 0;
 
-  const quote = quotes[Math.floor(Math.random() * quotes.length)];
-  let index = 0;
+    // 1. Function to trigger the fade out
+    const dismissOverlay = () => {
+        overlay.classList.add("fade-out");
+        // Optional: Remove from DOM after animation so it doesn't interfere
+        setTimeout(() => {
+            overlay.style.display = "none";
+        }, 500); 
+    };
 
-  function typeQuote() {
-    if (index < quote.length) {
-      typedEl.textContent += quote.charAt(index);
-      index++;
-      setTimeout(typeQuote, 45);
+    // 2. Add Click/Tap listener to vanish on click
+    overlay.addEventListener("click", dismissOverlay);
+
+    // 3. Typing logic
+    function typeQuote() {
+        if (typedEl && index < quote.length) {
+            typedEl.textContent += quote.charAt(index);
+            index++;
+            setTimeout(typeQuote, 45);
+        }
     }
-  }
 
-  setTimeout(typeQuote, 600);
+    typedEl.textContent = ""; 
+    setTimeout(typeQuote, 600);
 
-  setTimeout(() => {
-    overlay.classList.add("fade-out");
-  }, 1700);
+    // 4. Keep the auto-vanish as a fallback (after 3 seconds)
+    setTimeout(dismissOverlay, 3000); 
 });
