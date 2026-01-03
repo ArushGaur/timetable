@@ -161,12 +161,11 @@ function setCurrentDay() {
     const today = new Date().getDay();
     const todayName = days[today];
 
-    // Find matching tab button
     const buttons = document.querySelectorAll(".tabs button");
 
     buttons.forEach(button => {
         if (button.innerText === todayName) {
-            button.click(); // auto select today
+            button.click();
         }
     });
 }
@@ -200,7 +199,6 @@ function updateClassStates() {
         }
     });
 }
-
 
 
 function updateStickyCurrentClass() {
@@ -239,3 +237,28 @@ function updateStickyCurrentClass() {
             }
         }
 
+window.addEventListener("load", () => {
+  const overlay = document.getElementById("quoteOverlay");
+  const typedEl = document.getElementById("typedQuote");
+
+  const quotes = [
+    "Designed to Focus"
+  ];
+
+  const quote = quotes[Math.floor(Math.random() * quotes.length)];
+  let index = 0;
+
+  function typeQuote() {
+    if (index < quote.length) {
+      typedEl.textContent += quote.charAt(index);
+      index++;
+      setTimeout(typeQuote, 45);
+    }
+  }
+
+  setTimeout(typeQuote, 600);
+
+  setTimeout(() => {
+    overlay.classList.add("fade-out");
+  }, 1700);
+});
