@@ -4,6 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <link rel="manifest" href="/timetable/manifest.json">
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("/timetable/service-worker.js");
+        }
+    </script>
     <meta name="theme-color" content="#1e88e5">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Timetable</title>
@@ -58,4 +63,3 @@
 
 
 </html>
-
