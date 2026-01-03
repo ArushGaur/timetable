@@ -123,20 +123,7 @@ const defaultTimetable = {
         { time: "21:30 - 22:30", Work: "Class Revision", notify: false, location: "CVR-210" }
     ],
     Saturday: [
-        { time: "06:00 - 06:30", Work: "Ready", notify: false, location: "CVR-210" },
-        { time: "06:30 - 07:30", Work: "Gym", notify: false, location: "Gymkhana" },
-        { time: "07:30 - 08:00", Work: "Breakfast", notify: false, location: "CVR-210" },
-        { time: "08:00 - 08:45", Work: "News Reading", notify: false, location: "CVR-210" },
-        { time: "08:45 - 12:00", Work: "NCC Traning", notify: false, location: "" },
-        { time: "12:00 - 13:00", Work: "Bath", notify: true, location: "Hostel" },
-        { time: "13:00 - 13:40", Work: "Lunch", notify: true, location: "Mess" },
-        { time: "13:40 - 15:40", Work: "NCERT Reading", notify: true, location: "CVR-210" },
-        { time: "16:00 - 19:00", Work: "WEB Dev", notify: false, location: "CVR-210" },
-        { time: "19:00 - 19:30", Work: "------", notify: true, location: "" },
-        { time: "19:30 - 20:30", Work: "Assignment", notify: false, location: "CVR-210" },
-        { time: "20:30 - 21:00", Work: "Dinner", notify: false, location: "Mess" },
-        { time: "21:00 - 22:00", Work: "NCERT Reading", notify: false, location: "CVR-210" },
-        { time: "22:00 - 23:00", Work: "Italian", notify: false, location: "CVR-210" }
+        { time: "06:00 - 06:30", Work: "", notify: false, location: "" },
     ],
     Sunday: [
         { time: "06:00 - 06:30", Work: "Ready", notify: false, location: "CVR-210" },
@@ -384,5 +371,6 @@ window.addEventListener("load", () => {
     // 4. Keep the auto-vanish as a fallback (after 3 seconds)
     setTimeout(dismissOverlay, 1750); 
 });
+
 
 
