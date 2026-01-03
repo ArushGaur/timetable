@@ -188,7 +188,7 @@ function updateClassStates() {
         const start = timeToMinutes(row.dataset.start);
         const end = timeToMinutes(row.dataset.end);
 
-        if (currentMinutes > end) {
+        if (currentMinutes >= end) {
             row.classList.add("past");
         }
         else if (currentMinutes >= start && currentMinutes <= end) {
@@ -238,3 +238,4 @@ function updateStickyCurrentClass() {
                 bar.classList.add("hidden");
             }
         }
+
