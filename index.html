@@ -38,7 +38,10 @@
 
         <div class="card">
             <div class="card-header">
-                <h1 id="userName">Arush Gaur</h1>
+                <h1 id="userName" style="cursor:pointer;" onclick="openTextEditor(null, null, null, userName, 'name')">
+                    Arush Gaur
+                </h1>
+
             </div>
 
             <div class="tabs">
@@ -64,6 +67,55 @@
             </div>
         </div>
     </div>
+
+    <div id="timePickerOverlay" class="time-modal hidden">
+        <div class="time-card">
+            <h3>Adjust Schedule</h3>
+
+            <div class="time-row">
+                <div class="time-box">
+                    <label>START</label>
+                    <div class="time-input" onclick="openNativePicker(this)">
+                        <input type="time" id="startTime">
+                        <span class="clock-icon">🕒</span>
+                    </div>
+
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="time-box">
+                    <label>END</label>
+                    <div class="time-input" onclick="openNativePicker(this)">
+                        <input type="time" id="endTime">
+                        <span class="clock-icon">🕒</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn-cancel" onclick="closeTimePicker()">Cancel</button>
+                <button class="btn-confirm" onclick="applyTime()">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="textEditOverlay" class="time-modal hidden">
+        <div class="time-card">
+            <h3 id="textEditTitle">Edit</h3>
+
+            <div class="text-input-wrapper">
+                <input type="text" id="textEditInput" placeholder="Enter value" autocomplete="off" />
+            </div>
+
+            <div class="actions">
+                <button class="btn-cancel" onclick="closeTextEditor()">Cancel</button>
+                <button class="btn-confirm" onclick="applyTextEdit()">Confirm</button>
+            </div>
+        </div>
+    </div>
+
     <footer class="attractive-footer">
         <div class="footer-content">
             <span>Made with</span>
@@ -79,15 +131,11 @@
 
 <div id="quoteOverlay">
     <div class="quote-card">
-        <img src="/timetable/welcome.png" alt="Motivation">
+        <img src="welcome.png" alt="Motivation">
         <p id="quoteText">
             Designed for Focus
         </p>
     </div>
 </div>
 
-
 </html>
-
-
-
