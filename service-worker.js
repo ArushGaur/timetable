@@ -7,7 +7,7 @@ const FILES_TO_CACHE = [
   "/timetable/script.js",
   "/timetable/manifest.json",
   "/timetable/icon-192.jpg",
-  "/timetable/icon-512.jpg"
+  "/timetable/icon-152.jpg"
 ];
 
 self.addEventListener("install", (event) => {
@@ -41,3 +41,4 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
+
