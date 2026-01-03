@@ -1,4 +1,4 @@
-const CACHE_NAME = "timetable-cache-v2";
+const CACHE_NAME = "timetable-cache-v3";
 
 const FILES_TO_CACHE = [
   "/timetable/",
@@ -33,5 +33,6 @@ self.addEventListener("fetch", (event) => {
     caches.match(event.request).then((res) => res || fetch(event.request))
   );
 });
+
 
 
