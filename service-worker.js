@@ -10,3 +10,11 @@ const FILES_TO_CACHE = [
   "/timetable/icon-512.jpg"
 ];
 
+self.addEventListener("install", () => {
+  self.skipWaiting();
+});
+
+self.addEventListener("activate", () => {
+  self.clients.claim();
+});
+
