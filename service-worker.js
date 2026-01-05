@@ -5,8 +5,8 @@ const STATIC_ASSETS = [
   "/timetable/style.css",
   "/timetable/script.js",
   "/timetable/manifest.json",
-  "/timetable/welcome.png",
   "/timetable/icon-192.png",
+  "/timetable/welcome.png",
   "/timetable/icon-512.png"
 ];
 
@@ -44,4 +44,5 @@ self.addEventListener("fetch", (event) => {
       })
   );
 });
+
 
