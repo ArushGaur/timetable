@@ -13,13 +13,9 @@
       "sizes": "512x512",
       "type": "image/png"
     },
-    {
-      "src": "/timetable/welcome.png",
-      "sizes": "450x450",
-      "type": "image/png"
-    }
   ]
 }
+
 
 
 
