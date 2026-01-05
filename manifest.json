@@ -12,12 +12,13 @@
       "src": "/timetable/icon-192.png",
       "sizes": "512x512",
       "type": "image/png"
+      "purpose": "maskable"
     },
+    {
+      "src": "/timetable/welcome.png",
+      "sizes": "450x450",
+      "type": "image/png"
+      "purpose": "any"
+    }
   ]
 }
-
-
-
-
-
-
