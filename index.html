@@ -6,9 +6,9 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <link rel="manifest" href="/timetable/manifest.json">
+    <link rel="manifest" href="/studentTimetable/manifest.json">
     <script>
-        navigator.serviceWorker.register("/timetable/service-worker.js");
+        navigator.serviceWorker.register("/studentTimetable/service-worker.js");
     </script>
     <meta name="theme-color" content="#1e88e5">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,18 +18,31 @@
 </head>
 
 <body>
+    <div class="container">
+        <button id="profileBtn" onclick="openProfile()"
+            style="padding: 0.5rem 0.6rem; border-radius: 8px; border: none; background: #1e88e5; color: white; cursor: pointer; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 1rem; box-shadow: 0.3rem 0.3rem 2rem rgba(0,0,0,0.3);">
+            👤
+        </button>
+    </div>
+
+    <div id="loginScreen" class="login-screen hidden">
+        <div class="login-card">
+            <h2>Welcome</h2>
+            <p>Enter your name</p>
+
+            <div class="autocomplete">
+                <input type="text" id="studentInput" placeholder="Ex Deepak" autocomplete="off" />
+                <ul id="suggestions" class="suggestions hidden"></ul>
+            </div>
+        </div>
+    </div>
+
     <div id="currentClassBar" class="current-class-bar hidden">
         <span class="now">NOW</span>
         <span id="currentClassText"></span>
     </div>
 
     <div class="container">
-        <div style="text-align: right;">
-            <button id="editBtn" onclick="toggleEditMode()"
-                style="padding: 0.5rem 0.6rem; border-radius: 8px; border: none; background: #1e88e5; color: white; cursor: pointer; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 1rem; box-shadow: 0.3rem 0.3rem 2rem rgba(0,0,0,0.3);">
-                ✏️
-            </button>
-        </div>
         <h1>
             <pre
                 style="font-size: 30px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">  Timetable 📅</pre>
@@ -39,9 +52,7 @@
         <div class="card">
             <div class="card-header">
                 <h1 id="userName" style="cursor:pointer;" onclick="openTextEditor(null, null, null, userName, 'name')">
-                    Arush Gaur
-                </h1>
-
+                    Your Name</h1>
             </div>
 
             <div class="tabs">
@@ -126,6 +137,56 @@
         <div class="footer-line"></div>
     </footer>
     <script src="script.js"></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.getRegistrations().then(regs => {
+                regs.forEach(reg => reg.update());
+            });
+        }
+    </script>
+    <!-- PROFILE DRAWER -->
+    <div id="profileDrawer" class="profile-drawer hidden">
+        <div class="profile-content">
+            <h3>Profile</h3>
+
+            <div class="profile-info">
+                <p class="profile-name" id="profileName"></p>
+                <p class="profile-roll" id="profileRoll"></p>
+            </div>
+
+            <button class="logout-btn" style="background:#1e88e5;" onclick="sortTimetable()">
+                Toggle Class Priority
+            </button>
+
+
+
+            <!-- EDIT BUTTON (NEW) -->
+            <button id="drawerEditBtn" onclick="toggleEditMode()" style="
+        margin-top: 1.2rem;
+        padding: 0.9rem;
+        font-size: 1rem;
+        border-radius: 12px;
+        border: none;
+        background: #1e88e5;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+    ">
+                ✏️ Edit Timetable
+            </button>
+
+            <!-- LOGOUT -->
+            <button class="logout-btn" onclick="logoutStudent()">
+                Logout
+            </button>
+        </div>
+    </div>
+
+    <button id="saveBtn" onclick="toggleEditMode()">
+        ✅
+    </button>
+
+
 </body>
 
 
@@ -139,4 +200,3 @@
 </div>
 
 </html>
-
