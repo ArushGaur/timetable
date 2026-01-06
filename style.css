@@ -18,7 +18,7 @@ body {
 .container {
     width: min(92%, 900px);
     margin: 0 auto;
-    padding: 2rem 0;
+    padding: 1rem 0 2rem; /* smaller top padding */
     text-align: center;
 }
 
@@ -110,7 +110,6 @@ tbody tr {
     border-top: 1px solid #e6eaf2;
 }
 
-/* MOBILE ADJUSTMENTS */
 @media (max-width: 380px) {
     h1 {
         font-size: 1.6rem;
@@ -156,10 +155,10 @@ tbody tr {
     }
 }
 
-/* CLASS STATES */
 
 .class-row.past {
     opacity: 0.45;
+    text-decoration: line-through;
 }
 
 .class-row.current {
@@ -173,11 +172,12 @@ tbody tr {
     font-weight: bold;
 }
 
-/* STICKY CURRENT CLASS BAR */
 
 .current-class-bar {
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 999;
     background: #1e88e5;
     color: #fff;
@@ -202,10 +202,6 @@ tbody tr {
     display: none;
 }
 
-/* ========================= */
-/* QUOTE INTRO OVERLAY */
-/* ========================= */
-
 #quoteOverlay {
     position: fixed;
     inset: 0;
@@ -216,7 +212,6 @@ tbody tr {
     z-index: 9999;
 }
 
-/* Quote card (NO ZOOM) */
 .quote-card {
     background: white;
     width: 85%;
@@ -227,7 +222,6 @@ tbody tr {
     box-shadow: 0 20px 40px rgba(0,0,0,0.15);
 }
 
-/* Image on top */
 .quote-card img {
     width: 140px;
     height: 140px;
@@ -235,7 +229,6 @@ tbody tr {
     margin-bottom: 18px;
 }
 
-/* Quote text – centered, left → right reveal */
 .quote-card p {
   position: relative;
   font-size: 18px;
@@ -560,4 +553,269 @@ input[type="time"]::-webkit-calendar-picker-indicator {
   content: " ✎";
   font-size: 0.75em;
   opacity: 0.5;
+}
+
+/* ============================= */
+/* FANCY LOGIN SCREEN */
+/* ============================= */
+
+.login-screen {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        #e3f2fd,
+        #f5f7fb,
+        #e8eaf6
+    );
+    backdrop-filter: blur(6px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeInBg 0.6s ease-out;
+}
+
+@keyframes fadeInBg {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.login-screen.hidden {
+    display: none;
+}
+
+/* Login Card */
+.login-card {
+    background: white;
+    padding: 2.2rem 2rem;
+    width: 92%;
+    max-width: 380px;
+    border-radius: 24px;
+    text-align: center;
+    box-shadow:
+        0 20px 40px rgba(0,0,0,0.12),
+        0 8px 16px rgba(0,0,0,0.08);
+    animation: slideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Title */
+.login-card h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.3rem;
+}
+
+.login-card p {
+    font-size: 0.95rem;
+    color: #64748b;
+    margin-bottom: 1.4rem;
+}
+
+/* Autocomplete Wrapper */
+.autocomplete {
+    position: relative;
+    margin-top: 0.8rem;
+}
+
+/* Input */
+.autocomplete input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border-radius: 14px;
+    border: 1.5px solid #dbeafe;
+    outline: none;
+    transition: all 0.25s ease;
+    background: #f8fafc;
+}
+
+.autocomplete input:focus {
+    background: #ffffff;
+    border-color: #1e88e5;
+    box-shadow: 0 0 0 3px rgba(30,136,229,0.15);
+}
+
+/* Suggestions Dropdown */
+.suggestions {
+    list-style: none;
+    margin: 8px 0 0;
+    padding: 6px 0;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+    max-height: 240px;
+    overflow-y: auto;
+    position: absolute;
+    width: 100%;
+    z-index: 10001;
+    animation: dropDown 0.25s ease-out;
+}
+
+@keyframes dropDown {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.suggestions.hidden {
+    display: none;
+}
+
+/* Each Student Row */
+.suggestions li {
+    padding: 10px 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+    transition: background 0.2s ease;
+}
+
+.suggestions li:hover {
+    background: #eff6ff;
+}
+
+/* Roll Number */
+.suggestions .roll {
+    color: #64748b;
+    font-size: 0.82rem;
+}
+
+/* Scrollbar (optional polish) */
+.suggestions::-webkit-scrollbar {
+    width: 6px;
+}
+
+.suggestions::-webkit-scrollbar-thumb {
+    background: #c7d2fe;
+    border-radius: 6px;
+}
+
+#profileBtn,
+#editBtn {
+    position: fixed;
+    top: 12px;
+    z-index: 1002;
+    transition: top 0.3s ease;
+}
+
+/* Left & Right positions */
+#profileBtn {
+    left: 12px;
+}
+
+#editBtn {
+    right: 12px;
+}
+
+/* When NOW bar is visible → move BOTH together */
+body.has-current-bar #profileBtn,
+body.has-current-bar #editBtn {
+    top: 64px; /* height of NOW bar */
+}
+
+/* PROFILE DRAWER */
+.profile-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50vw;
+    max-width: 420px;
+    height: 100vh;
+    background: white;
+    z-index: 10001;
+    box-shadow: 8px 0 30px rgba(0,0,0,0.25);
+
+    transform: translateX(-100%);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.profile-drawer.show {
+    transform: translateX(0);
+}
+
+.profile-drawer.hidden {
+    display: none;
+}
+
+.profile-content {
+    height: 100%;
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.profile-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.profile-info {
+    margin-top: 1.5rem;
+}
+
+.profile-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.profile-roll {
+    color: #666;
+    margin-top: 0.3rem;
+}
+
+/* LOGOUT BUTTON */
+.logout-btn {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 0.9rem;
+    font-size: 1rem;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+    .profile-drawer {
+        width: 80vw;
+    }
+}
+
+#saveBtn {
+    position: fixed;
+    top: 4rem;
+    right: 12px;
+    z-index: 1003;
+    padding: 0.55rem 0.7rem;
+    border-radius: 10px;
+    border: none;
+    background: #2e7d32;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    display: none;
+    transition: right 0.35s ease; 
 }
