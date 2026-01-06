@@ -10,16 +10,15 @@ if ('serviceWorker' in navigator) {
 const defaultTimetable = {
     Monday: [
         { time: "06:00 - 06:30", Work: "Ready", notify: false, location: "CVR-210" },
-        { time: "06:30 - 07:30", Work: "Gym", notify: false, location: "Gymkhana" },
-        { time: "07:30 - 08:30", Work: "Bath & Breakfast", notify: false, location: "CVR-210" },
-        { time: "08:30 - 09:45", Work: "News Reading", notify: false, location: "CVR-210" },
-        { time: "09:45 - 11:00", Work: "PH1201", notify: true, location: "CLH-LT103" },
+        { time: "06:30 - 07:30", Work: "News Reading", notify: false, location: "CVR-210" },
+        { time: "07:30 - 08:00", Work: "Breakfast", notify: false, location: "Mess" },
+        { time: "08:00 - 09:00", Work: "PH1201 tut", notify: true, location: "R303" },
+        { time: "10:00 - 11:00", Work: "PH1201", notify: true, location: "CLH-LT103" },
         { time: "11:00 - 12:00", Work: "CE1201", notify: true, location: "CLH-LT103" },
         { time: "12:00 - 12:40", Work: "Lunch", notify: false, location: "Mess" },
         { time: "12:40 - 13:40", Work: "NCERT Reading", notify: false, location: "CVR-210" },
         { time: "13:40 - 17:00", Work: "EE1201", notify: true, location: "LAB" },
         { time: "17:00 - 18:00", Work: "CS1201", notify: true, location: "CLH-LT003" },
-        { time: "18:00 - 19:30", Work: "IK6201", notify: true, location: "CLH-LT003/LT103" },
         { time: "19:30 - 20:30", Work: "Dinner", notify: false, location: "Mess" },
         { time: "20:30 - 22:00", Work: "Class Revision", notify: false, location: "CVR-210" },
         { time: "22:00 - 23:30", Work: "NCERT Reading", notify: false, location: "CVR-210" }
@@ -44,15 +43,14 @@ const defaultTimetable = {
         { time: "06:00 - 06:30", Work: "Ready", notify: false, location: "CVR-210" },
         { time: "06:30 - 07:00", Work: "Exercise", notify: false, location: "CVR-210" },
         { time: "07:00 - 08:00", Work: "Bath & Breakfast", notify: false, location: "CVR-210" },
-        { time: "08:00 - 09:00", Work: "MA1201 Tut", notify: false, location: "R303" },
-        { time: "09:00 - 10:00", Work: "News Reading", notify: true, location: "" },
+        { time: "08:00 - 09:00", Work: "IK1201", notify: true, location: "CLH-LT003/LT103" },
+        { time: "09:00 - 10:00", Work: "News Reading", notify: false, location: "" },
         { time: "10:00 - 11:00", Work: "PH1201", notify: true, location: "CLH-LT103" },
         { time: "11:00 - 12:00", Work: "EE1201", notify: true, location: "CLH-LT103" },
-        { time: "12:00 - 13:00", Work: "MA1201", notify: false, location: "CLH-LT003" },
+        { time: "12:00 - 13:00", Work: "MA1201", notify: true, location: "CLH-LT003" },
         { time: "13:00 - 14:00", Work: "Lunch", notify: false, location: "Mess" },
         { time: "14:00 - 17:00", Work: "CS1201", notify: true, location: "LAB SLOT" },
         { time: "17:00 - 17:55", Work: "Class Revision", notify: false, location: "" },
-        { time: "17:55 - 19:30", Work: "IK1201", notify: false, location: "CLH-LT003/LT103" },
         { time: "19:30 - 20:30", Work: "Dinner", notify: false, location: "Mess" },
         { time: "20:30 - 21:30", Work: "Class Revision", notify: false, location: "CVR-210" },
         { time: "21:30 - 23:30", Work: "NCERT Reading", notify: false, location: "CVR-210" }
@@ -61,14 +59,13 @@ const defaultTimetable = {
         { time: "06:00 - 06:30", Work: "Ready", notify: false, location: "CVR-210" },
         { time: "06:30 - 07:00", Work: "Exercise", notify: false, location: "CVR-210" },
         { time: "07:00 - 08:00", Work: "Bath & Breakfast", notify: false, location: "CVR-210" },
-        { time: "08:00 - 09:00", Work: "PH1201 Tut", notify: false, location: "R303" },
+        { time: "08:00 - 09:00", Work: "IK1201", notify: true, location: "CLH-LT003/LT103" },
         { time: "09:00 - 12:00", Work: "PH1201", notify: true, location: "LAB SLOT" },
         { time: "12:00 - 13:00", Work: "EE1201", notify: true, location: "CLH-LT003" },
         { time: "13:00 - 14:00", Work: "Lunch", notify: false, location: "Mess" },
-        { time: "14:00 - 15:30", Work: "Class Revision", notify: true, location: "CVR-210" },
-        { time: "15:30 - 16:00", Work: "---------", notify: true, location: "CVR-210" },
+        { time: "14:00 - 15:30", Work: "Class Revision", notify: false, location: "CVR-210" },
+        { time: "15:30 - 16:00", Work: "---------", notify: false, location: "CVR-210" },
         { time: "16:00 - 17:45", Work: "NCERT Reading", notify: false, location: "CVR-210" },
-        { time: "17:45 - 19:30", Work: "IK1201", notify: false, location: "CLH-LT003/LT103" },
         { time: "19:30 - 21:30", Work: "Italian", notify: false, location: "CVR-210" },
         { time: "21:30 - 22:00", Work: "Dinner", notify: false, location: "Mess" },
         { time: "22:00 - 23:00", Work: "News Reading", notify: false, location: "CVR-210" },
@@ -78,16 +75,15 @@ const defaultTimetable = {
         { time: "06:00 - 06:30", Work: "Ready", notify: false, location: "CVR-210" },
         { time: "06:30 - 07:30", Work: "Gym", notify: false, location: "Gymkhana" },
         { time: "07:30 - 08:30", Work: "Bath & Breakfast", notify: false, location: "CVR-210" },
-        { time: "08:30 - 09:45", Work: "News Reading", notify: false, location: "CVR-210" },
+        { time: "08:00 - 09:00", Work: "MA1201 Tut", notify: true, location: "R303" },
         { time: "09:45 - 11:00", Work: "PH1201", notify: true, location: "CLH-LT103" },
-        { time: "11:00 - 11:35", Work: "Class Revision", notify: true, location: "CVR-210" },
-        { time: "11:35 - 13:00", Work: "NCERT Reading", notify: true, location: "CVR-210" },
+        { time: "11:00 - 11:35", Work: "Class Revision", notify: false, location: "CVR-210" },
+        { time: "11:35 - 13:00", Work: "NCERT Reading", notify: false, location: "CVR-210" },
         { time: "13:00 - 14:00", Work: "Lunch", notify: false, location: "Mess" },
-        { time: "14:00 - 14:45", Work: "Italian", notify: true, location: "CVR-210" },
-        { time: "14:45 - 16:00", Work: "CS1201", notify: false, location: "CLH-LT003" },
-        { time: "16:00 - 17:00", Work: "MA1201", notify: false, location: "CLH-LT003" },
-        { time: "17:00 - 18:00", Work: "-------", notify: true, location: "" },
-        { time: "18:00 - 19:30", Work: "IK6201", notify: true, location: "CLH-LT003/LT103" },
+        { time: "14:00 - 14:45", Work: "Italian", notify: false, location: "CVR-210" },
+        { time: "14:45 - 16:00", Work: "CS1201", notify: true, location: "CLH-LT003" },
+        { time: "16:00 - 17:00", Work: "MA1201", notify: true, location: "CLH-LT003" },
+        { time: "17:00 - 18:00", Work: "-------", notify: false, location: "" },
         { time: "19:30 - 20:30", Work: "Dinner", notify: false, location: "Mess" },
         { time: "20:30 - 21:30", Work: "NCERT Reading", notify: false, location: "CVR-210" },
         { time: "21:30 - 22:30", Work: "Class Revision", notify: false, location: "CVR-210" }
@@ -98,11 +94,11 @@ const defaultTimetable = {
         { time: "07:30 - 08:00", Work: "Breakfast", notify: false, location: "CVR-210" },
         { time: "08:00 - 08:45", Work: "News Reading", notify: false, location: "CVR-210" },
         { time: "08:45 - 12:00", Work: "NCC Traning", notify: false, location: "" },
-        { time: "12:00 - 13:00", Work: "Bath", notify: true, location: "Hostel" },
-        { time: "13:00 - 13:40", Work: "Lunch", notify: true, location: "Mess" },
-        { time: "13:40 - 15:40", Work: "NCERT Reading", notify: true, location: "CVR-210" },
+        { time: "12:00 - 13:00", Work: "Bath", notify: false, location: "Hostel" },
+        { time: "13:00 - 13:40", Work: "Lunch", notify: false, location: "Mess" },
+        { time: "13:40 - 15:40", Work: "NCERT Reading", notify: false, location: "CVR-210" },
         { time: "16:00 - 19:00", Work: "WEB Dev", notify: false, location: "CVR-210" },
-        { time: "19:00 - 19:30", Work: "------", notify: true, location: "" },
+        { time: "19:00 - 19:30", Work: "------", notify: false, location: "" },
         { time: "19:30 - 20:30", Work: "Assignment", notify: false, location: "CVR-210" },
         { time: "20:30 - 21:00", Work: "Dinner", notify: false, location: "Mess" },
         { time: "21:00 - 22:00", Work: "NCERT Reading", notify: false, location: "CVR-210" },
@@ -113,49 +109,81 @@ const defaultTimetable = {
         { time: "06:30 - 07:30", Work: "Gym", notify: false, location: "Gymkhana" },
         { time: "07:30 - 08:30", Work: "Bath & Breakfast", notify: false, location: "CVR-210" },
         { time: "08:30 - 09:45", Work: "News Reading", notify: false, location: "CVR-210" },
-        { time: "09:45 - 12:45", Work: "WEB Dev", notify: true, location: "CVR-210" },
-        { time: "12:45 - 13:35", Work: "Lunch", notify: true, location: "Mess" },
-        { time: "13:35 - 15:45", Work: "NCERT Reading", notify: true, location: "CVR-210" },
+        { time: "09:45 - 12:45", Work: "WEB Dev", notify: false, location: "CVR-210" },
+        { time: "12:45 - 13:35", Work: "Lunch", notify: false, location: "Mess" },
+        { time: "13:35 - 15:45", Work: "NCERT Reading", notify: false, location: "CVR-210" },
         { time: "15:45 - 16:35", Work: "Italian", notify: false, location: "CVR-210" }
     ]
 };
-
 // 2. State variables
 let currentDay = "Monday";
+let isSorted = false;
 let isEditMode = false;
 let timetable = JSON.parse(localStorage.getItem("userTimetable")) || defaultTimetable;
 let userName = localStorage.getItem("userName") || "Arush Gaur";
 
-window.onload = () => {
+window.addEventListener("load", () => {
     document.getElementById("userName").innerText = userName;
     setCurrentDay();
-};
+    setTimeout(updateStickyCurrentClass, 0);
 
-function setupEditButton() {
-    const container = document.querySelector(".container");
-    const editBtn = document.createElement("button");
-    editBtn.id = "editBtn";
-    editBtn.innerText = "✏️";
-    editBtn.style = "position: fixed; top: 10px; right: 10px; z-index: 1001; padding: 8px 15px; border-radius: 20px; border: none; background: #1e88e5; color: white; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); cursor: pointer;";
-    editBtn.onclick = toggleEditMode;
-    document.body.appendChild(editBtn);
-}
+});
+
+const loginScreen = document.getElementById("loginScreen");
+const studentInput = document.getElementById("studentInput");
+const suggestions = document.getElementById("suggestions");
+
+window.addEventListener("load", () => {
+    const profile = JSON.parse(localStorage.getItem("studentProfile"));
+
+    if (!profile) {
+        loginScreen.classList.remove("hidden");
+    }
+});
 
 function toggleEditMode() {
+    // if (isProfileOpen) return;
     isEditMode = !isEditMode;
-    const btn = document.getElementById("editBtn");
+
+    const saveBtn = document.getElementById("saveBtn");
+    const drawerBtn = document.getElementById("drawerEditBtn");
     const nameHeader = document.getElementById("userName");
 
     if (isEditMode) {
-        btn.innerText = "✅";
-        btn.style.background = "#2e7d32";
-        // Turn the name into an input field
-        nameHeader.innerHTML = `<input type="text" id="nameInput" value="${userName}" style="color:black; font-size: 1.2rem; text-align: center; border-radius: 5px; border: none; padding: 5px;">`;
-    } else {
-        btn.innerText = "✏️";
-        btn.style.background = "#1e88e5";
+        // ===== ENTER EDIT MODE =====
+        saveBtn.style.display = "block";
 
-        // Save the new name
+        if (drawerBtn) {
+            drawerBtn.innerText = "✏️ Editing...";
+            drawerBtn.disabled = true;
+            drawerBtn.style.opacity = "0.6";
+        }
+
+        nameHeader.innerHTML = `
+            <input
+                type="text"
+                id="nameInput"
+                value="${userName}"
+                style="
+                    color: black;
+                    font-size: 1.2rem;
+                    text-align: center;
+                    border-radius: 5px;
+                    border: none;
+                    padding: 5px;
+                "
+            >
+        `;
+    } else {
+        // ===== SAVE & EXIT =====
+        saveBtn.style.display = "none";
+
+        if (drawerBtn) {
+            drawerBtn.innerText = "✏️ Edit Timetable";
+            drawerBtn.disabled = false;
+            drawerBtn.style.opacity = "1";
+        }
+
         const nameInput = document.getElementById("nameInput");
         if (nameInput) {
             userName = nameInput.value;
@@ -163,11 +191,12 @@ function toggleEditMode() {
             nameHeader.innerText = userName;
         }
 
-        // Save the timetable
         localStorage.setItem("userTimetable", JSON.stringify(timetable));
     }
+
     renderTable();
 }
+
 
 function updateValue(day, index, field, value) {
     timetable[day][index][field] = value;
@@ -179,7 +208,7 @@ function changeDay(day, btn) {
     btn.classList.add("active");
     renderTable();
 }
-
+const originalTimetable = JSON.parse(JSON.stringify(timetable));
 function renderTable() {
     const body = document.getElementById("timetableBody");
     body.innerHTML = "";
@@ -214,9 +243,6 @@ function renderTable() {
 >
   ${cls.location}
 </td>
-
-
-
                     <!-- DELETE -->
                     <td>
                         <button
@@ -346,6 +372,14 @@ function updateStickyCurrentClass() {
     });
 
     if (!found) bar.classList.add("hidden");
+    if (found) {
+        bar.classList.remove("hidden");
+        document.body.classList.add("has-current-bar");
+    } else {
+        bar.classList.add("hidden");
+        document.body.classList.remove("has-current-bar");
+    }
+
 }
 
 window.addEventListener("load", () => {
@@ -387,7 +421,7 @@ window.addEventListener("load", () => {
 let activeEditRowIndex = null;
 
 function openTimePicker(index, time) {
-    if (!isEditMode) return;
+    if (!isEditMode || isProfileOpen) return;
 
     activeEditRowIndex = index;
 
@@ -441,7 +475,7 @@ let activeTextEdit = {
 };
 
 function openTextEditor(day, index, field, currentValue, type = "timetable") {
-    if (!isEditMode) return;
+    if (!isEditMode || isProfileOpen) return;
 
     activeTextEdit = { type, day, index, field };
 
@@ -492,4 +526,157 @@ function closeTextEditor() {
     };
 }
 
+const STUDENTS = [
+    { name: "Arush Gaur", roll: "IITP23EE001", group: "G1" },
+    { name: "Rahul Kumar", roll: "IITP23ME014", group: "G3" },
+    { name: "Ananya Singh", roll: "IITP23CS021", group: "G7" }
+];
 
+studentInput.addEventListener("input", () => {
+    const query = studentInput.value.toLowerCase().trim();
+    suggestions.innerHTML = "";
+
+    if (!query) {
+        suggestions.classList.add("hidden");
+        return;
+    }
+
+    const matches = STUDENTS.filter(s =>
+        s.name.toLowerCase().includes(query)
+    );
+
+    if (matches.length === 0) {
+        suggestions.classList.add("hidden");
+        return;
+    }
+
+    matches.forEach(student => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+            <span>${student.name}</span>
+            <span class="roll">${student.roll}</span>
+        `;
+        li.onclick = () => selectStudent(student);
+        suggestions.appendChild(li);
+    });
+
+    suggestions.classList.remove("hidden");
+});
+
+function selectStudent(student) {
+    studentInput.value = student.name;
+    suggestions.classList.add("hidden");
+
+    const profile = {
+        name: student.name,
+        roll: student.roll,
+        group: student.group
+    };
+
+    localStorage.setItem("studentProfile", JSON.stringify(profile));
+    localStorage.setItem("userName", student.name);
+
+    document.getElementById("userName").innerText = student.name;
+    loginScreen.classList.add("hidden");
+
+    startApp();
+}
+
+let isProfileOpen = false;
+
+function openProfile() {
+    const drawer = document.getElementById("profileDrawer");
+
+    const profile = JSON.parse(localStorage.getItem("studentProfile"));
+    if (!profile) return;
+
+    document.getElementById("profileName").innerText = profile.name;
+    document.getElementById("profileRoll").innerText = profile.roll || "";
+
+    // 🔒 Disable editing when profile opens
+    if (isEditMode) {
+        toggleEditMode(); // auto save + exit edit mode
+    }
+
+    isProfileOpen = true;
+
+    drawer.classList.remove("hidden");
+    requestAnimationFrame(() => {
+        drawer.classList.add("show");
+    });
+}
+
+function closeProfile() {
+    const drawer = document.getElementById("profileDrawer");
+
+    drawer.classList.remove("show");
+
+    setTimeout(() => {
+        drawer.classList.add("hidden");
+        isProfileOpen = false; // 🔓 enable interactions again
+    }, 400);
+}
+
+
+/* Close drawer if clicked outside */
+document.addEventListener("click", (e) => {
+    const drawer = document.getElementById("profileDrawer");
+    const btn = document.getElementById("profileBtn");
+
+    if (
+        drawer.classList.contains("show") &&
+        !drawer.contains(e.target) &&
+        e.target !== btn
+    ) {
+        closeProfile();
+    }
+});
+
+/* LOGOUT */
+function logoutStudent() {
+    if (!confirm("Are you sure you want to logout?")) return;
+
+    localStorage.removeItem("studentProfile");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("personalTasks");
+
+    location.reload();
+}
+
+function sortTimetable() {
+
+    // TURN SORT OFF → restore original
+    if (isSorted) {
+        timetable = JSON.parse(JSON.stringify(originalTimetable));
+        localStorage.setItem("userTimetable", JSON.stringify(timetable));
+        isSorted = false;
+        renderTable();
+        closeProfile();
+        return;
+    }
+
+    // TURN SORT ON
+    Object.keys(timetable).forEach(day => {
+        const entries = timetable[day];
+
+        const getStartMinutes = (entry) => {
+            const start = entry.time.split(" - ")[0];
+            return timeToMinutes(start);
+        };
+
+        const instituteClasses = entries
+            .filter(e => e.notify)
+            .sort((a, b) => getStartMinutes(a) - getStartMinutes(b));
+
+        const otherTasks = entries
+            .filter(e => !e.notify)
+            .sort((a, b) => getStartMinutes(a) - getStartMinutes(b));
+
+        timetable[day] = [...instituteClasses, ...otherTasks];
+    });
+
+    localStorage.setItem("userTimetable", JSON.stringify(timetable));
+    isSorted = true;
+    renderTable();
+    closeProfile();
+}
