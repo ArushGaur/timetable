@@ -56,19 +56,19 @@ const defaultTimetable = {
         { time: "21:30 - 23:30", Work: "NCERT Reading", notify: false, location: "CVR-210" }
     ],
     Thursday: [
-        { time: "06:00 - 06:30", Work: "Ready", notify: false, location: "CVR-210" },
-        { time: "06:30 - 07:00", Work: "Exercise", notify: false, location: "CVR-210" },
+        { time: "05:30 - 06:00", Work: "Ready", notify: false, location: "CVR-210" },
+        { time: "06:00 - 07:00", Work: "Exercise", notify: false, location: "Gymkhana" },
         { time: "07:00 - 08:00", Work: "Bath & Breakfast", notify: false, location: "CVR-210" },
         { time: "08:00 - 09:00", Work: "IK1201", notify: true, location: "CLH-LT003/LT103" },
         { time: "09:00 - 12:00", Work: "PH1201", notify: true, location: "LAB SLOT" },
         { time: "12:00 - 13:00", Work: "EE1201", notify: true, location: "CLH-LT003" },
         { time: "13:00 - 14:00", Work: "Lunch", notify: false, location: "Mess" },
         { time: "14:00 - 15:30", Work: "Class Revision", notify: false, location: "CVR-210" },
-        { time: "15:30 - 16:00", Work: "---------", notify: false, location: "CVR-210" },
-        { time: "16:00 - 17:45", Work: "NCERT Reading", notify: false, location: "CVR-210" },
+        { time: "15:30 - 16:30", Work: "News Reading", notify: false, location: "CVR-210" },
+        { time: "16:30 - 17:45", Work: "Web Dev", notify: false, location: "CVR-210" },
         { time: "19:30 - 21:30", Work: "Italian", notify: false, location: "CVR-210" },
         { time: "21:30 - 22:00", Work: "Dinner", notify: false, location: "Mess" },
-        { time: "22:00 - 23:00", Work: "News Reading", notify: false, location: "CVR-210" },
+        { time: "22:00 - 23:00", Work: "NCERT Reading", notify: false, location: "CVR-210" },
         { time: "23:00 - 23:30", Work: "NCERT Reading", notify: false, location: "CVR-210" }
     ],
     Friday: [
@@ -680,3 +680,4 @@ function sortTimetable() {
     renderTable();
     closeProfile();
 }
+
